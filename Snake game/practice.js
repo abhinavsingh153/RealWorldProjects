@@ -72,6 +72,8 @@
      	console.log("No it is " , arr[0]);
      }
 
+     //Event Listeners
+
      canvas = document.getElementById("mycanvas");
 
      function f(){
@@ -82,7 +84,7 @@
 
 
      function f2(e){
-        console.log("A key got pressed",e );
+        console.log("A key got pressed",e.key );
      }
      document.addEventListener('keydown', f2);
 

@@ -1,81 +1,73 @@
 
-// canvas = document.getElementById('mycanvas');
-// canvas.width = 500;
-// canvas.height = 500;
-
-
-//canvas id=s used to draw graphics
-//pen = canvas.getContext('2d')
-
-//pen.fillStyle= "aqua";
-//pen.fillRect(rect.x , rect.y , rect.w,rect.h);
-
+cs = 68; // cell size of snake
 
 function init(){
 
-	console.log("we are inn Init()");
 	canvas = document.getElementById('mycanvas');
-	W = canvas.width = 500;
-	H = canvas.height = 500;
-	game_over = false;
-
+	W= H = canvas.width = canvas.height = 1000;
 
 	pen = canvas.getContext('2d');
 
-	// pen.fillRect(rect.x , rect.y , rect.w,rect.h);
-
-	rect={
-	x:W/2,
-	y:H/2,
-	w:40,
-	h:40,
-	speed:5,}
+	snake = {
+		init_len:5,
+		color:"blue",
+		cells:[],
+		direction:"right",
+		speed:1,
 
 
+		createSnake:function(){
+
+			for(var i  = this.init_len ; i >0 ; i--){
+				this.cells.push({x:i, y:0});
+			}
+		},
+
+		drawSnake:function(){
+
+			for(var i = 0 ; i <this.cells.length ; i++){
+				pen.fillStyle=this.color;
+				pen.fillRect(this.cells[i].x*cs  , this.cells[i].y*cs , cs-3 , cs-3);}
+		},
+
+		updateSnake:function(){
+
+			this.cells.pop();
+
+			var varX = this.cells[0].x + 1;
+			var varY = this.cells[0].y;
+
+			this.cells.unshift({x:varX , y : varY});
+
+
+
+			console.log("Updating snake");
+		},
+
+
+	}
+
+	snake.createSnake();
 
 }
 
 function draw(){
 
-	pen.clearRect(0,0, W,H);
+	pen.clearRect(0,0,W,H);
+	snake.drawSnake();
 
-	pen.fillStyle= "red";
-	pen.fillRect(rect.x , rect.y , rect.w,rect.h);
-		
-
-
-	//console.log("we are in draw()");
 }
 
 function update(){
-	rect.x +=rect.speed;
-	rect.y+= rect.speed;
 
-
-	if (rect.x>W-rect.w || rect.x<0) {
-		rect.speed*=-1;
-			console.log(rect.x);
-
-	}
-	//console.log("We are in update()");
+	snake.updateSnake();
 }
 
-function gameloop(){
-
-	if (game_over==true) {
-	clearInterval(f);
-}
-
-	console.log("We are in gameloop()");
+function gameLoop(){
 	draw();
 	update();
 }
 
 init();
 
-//gameloop();
-var f =setInterval(gameloop , 100);
-
-// if (game_over==true) {
-// 	clearInterval(f);
-// }
+var f = setInterval(gameLoop , 100);
