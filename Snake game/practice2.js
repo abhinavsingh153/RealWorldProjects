@@ -56,6 +56,7 @@ function moveBox(e){
 
 	console.log("KeyPressed value" , keyPressed);
 
+
 	//update
 
 	console.log("Key pressed = " , e.key);
@@ -76,9 +77,9 @@ function draw(){
 	//console.log("we are in draw()");
 }
 
-function update(keyPressed){
+function update(){
 	// rect.x +=rect.speed;
-	if (keyPressed == 2) {
+	if (moveBox() == 2) {
 		rect.y+= rect.speed;
 	}
 	
