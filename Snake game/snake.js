@@ -1,12 +1,14 @@
 
-cs = 68; // cell size of snake
 
 function init(){
 
 	canvas = document.getElementById('mycanvas');
 	W= H = canvas.width = canvas.height = 1000;
-
+	cs = 68; // cell size of snake
 	pen = canvas.getContext('2d');
+	game_over = false;
+
+	food = getRandomFood();
 
 	snake = {
 		init_len:5,
@@ -32,11 +34,21 @@ function init(){
 
 		updateSnake:function(){
 
-			this.cells.pop();
+			//check if the snake has eaten the food , increase the length of the snake and 
+			//generate the new food object
 
+			
 			var headX = this.cells[0].x;
 			var headY = this.cells[0].y;
 
+			if (headX == food.x && headY == food.y) {
+				console.log("food eaten");
+				food=getRandomFood();
+			}else{
+				this.cells.pop();
+			}
+
+			
 			var nextX , nextY;
 
 			if (this.direction == "right") {
@@ -57,6 +69,15 @@ function init(){
 			}
 
 			this.cells.unshift({x:nextX, y:nextY});
+
+			//write a logic that prevemts rhe snake from going out of the board
+
+			var last_x = Math.round(W/cs);
+			var last_y = Math.round(H/cs);
+
+			if (this.cells[0].x <0 || this.cells[0].y < 0 || this.cells[0].x > last_x || this.cells[0].y > last_y) {
+				game_over = true;
+			}
 
 			console.log("Updating snake with directions");
 		},
@@ -97,6 +118,9 @@ function draw(){
 	pen.clearRect(0,0,W,H);
 	snake.drawSnake();
 
+	pen.fillStyle=food.color;
+	pen.fillRect(food.x*cs, food.y*cs , cs,cs);
+
 }
 
 function update(){
@@ -104,7 +128,26 @@ function update(){
 	snake.updateSnake();
 }
 
+function getRandomFood(){
+	 var foodX = Math.round(Math.random() * (W-cs)/cs);
+	 var foodY = Math.round(Math.random() * (H-cs)/cs);
+
+	 var food = {
+	 	x: foodX,
+	 	y:foodY,
+	 	color:"red",
+	 }
+
+	 return food;
+}
+
 function gameLoop(){
+
+	if (game_over == true) {
+		clearInterval(f);
+		alert("Game Over");
+	}
+
 	draw();
 	update();
 }
