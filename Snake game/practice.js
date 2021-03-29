@@ -72,4 +72,18 @@
      	console.log("No it is " , arr[0]);
      }
 
+     canvas = document.getElementById("mycanvas");
+
+     function f(){
+        console.log("you clicked the document")
+     }
+
+     canvas.addEventListener('click' , f);
+
+
+     function f2(e){
+        console.log("A key got pressed",e );
+     }
+     document.addEventListener('keydown', f2);
+
     
