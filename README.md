@@ -3,10 +3,8 @@
 ### Description
   
   Classic snake game created using HTML , CSS and Javascript using the concept of arrays.
-  
-### Screenshots
 
-<img src="Screenshots/1.png">
+### Controls
 
-<img src="Screenshots/2.png">
+  Use keyboard directions for moving left, right , up and down.
 
