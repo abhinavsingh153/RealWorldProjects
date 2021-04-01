@@ -170,4 +170,4 @@ function gameLoop(){
 
 init();
 
-var f = setInterval(gameLoop , 100);
+var f=setInterval(gameLoop , 100);
